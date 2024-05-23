@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Post
+from .models import Post,CODE
 
 
 # Create your views here.
@@ -37,4 +37,13 @@ def new_post(request):
 
 
 def scr(request):
+    if request.method == 'CODE':
+        if request.CODE['code']:
+            new_article=CODE.object.create(
+                code = request.CODE['code'],
+            )
+        else:
+            new_article = CODE.object.create(
+                code=request.CODE['code'],
+            )
     return render(request,'main/scr.html')

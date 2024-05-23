@@ -18,7 +18,7 @@ urlpatterns = [
 
     path('blog/new_post/',new_post),
 
-    path('blog/scr/',scr ,name='scr')
+    path('blog/scr/',scr,name='scr')
 ]
 
 # 이미지 URL 설정
