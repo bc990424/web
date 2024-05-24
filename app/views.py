@@ -37,13 +37,13 @@ def new_post(request):
 
 
 def scr(request):
+
     if request.method == 'CODE':
-        if request.CODE['code']:
-            new_article=CODE.object.create(
-                code = request.CODE['code'],
-            )
-        else:
-            new_article = CODE.object.create(
-                code=request.CODE['code'],
-            )
-    return render(request,'main/scr.html')
+        new_article = CODE.objects.create(
+            code = request.CODE['code'],
+        )
+    else:
+        new_article = CODE.objects.create(
+            code=request.CODE['code'],
+        )
+    return render(request,'main/scr.html',{ 'code' : code } )

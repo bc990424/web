@@ -8,9 +8,14 @@
 <body>
     <h1> 코드</h1>
     <textarea rows=10 cols=10 name="code"></textarea>
-    <p>{{CODE.code}}</p>
+    <form method="CODE">
+        {% csrf_token %}
 
-    <button>실행</button>
+        <p>{{CODE.code}}</p>
+
+    </form>
+    <button type="submit">실행</button>
+
 
 
 
