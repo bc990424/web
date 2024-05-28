@@ -1,6 +1,15 @@
 <html>
     <head>
         <title>Blog List</title>
+        <style>
+
+            .left {
+            float: right;
+            display:table;
+            border:1px solid blue;
+            }
+
+        </style>
     </head>
     <body>
         <h1>게시판 페이지입니다</h1>
@@ -15,5 +24,14 @@
         {% endfor %}
         </table>
     <button><a href="new_post/">글쓰기</a></button>
+
+    <table >
+
+    {% for me in menu %}
+        <ul class="left">
+            <li> {{me}} </li>
+        </ul>
+        {% endfor %}
+    </table>
     </body>
 </html>
