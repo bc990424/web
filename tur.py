@@ -1,5 +1,6 @@
 import turtle
-
+import socket
+import _thread
 import numpy as np
 
 t = turtle.Turtle()
@@ -60,10 +61,7 @@ class omok:
 
 w = omok()
 
-
 w.init()
-
-
 
 w.locate(3,3,-1)
 
