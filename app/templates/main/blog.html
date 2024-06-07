@@ -1,37 +1,48 @@
-<html>
-    <head>
-        <title>Blog List</title>
-        <style>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>블로그 목록</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles/style.css' %}" />
+    <style>
+        .ta {
+            float: right; /* .ta 클래스를 오른쪽에 배치 */
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body class="menu">
 
-            .left {
-            float: right;
-            display:table;
-            border:1px solid blue;
-            }
+<nav class="menu_box_1">
+    <ul>
+        <li><a href="{% url 'blog' %}">블로그</a></li>
+        <li><a href="{% url 'game' %}">게임</a></li>
+        <li><a href="#">메뉴 아이템3</a></li>
+        <li><a href="#">메뉴 아이템4</a></li>
+    </ul>
+</nav>
 
-        </style>
-    </head>
-    <body>
-        <h1>게시판 페이지입니다</h1>
-        <!-- 게시판(postlist)의 게시글(list)을 하나씩 보여줍니다 -->
-        <!-- {와 %로 이루어진 구문 내부엔 파이썬이 사용됩니다 -->
-        <table>
-        {% for list in postlist %}
-            <!-- 게시글 클릭시 세부페이지로 넘어갑니다-->
-            <ul>
-                <li><a href="{{list.pk}}">{{list.postname}}</a></li>
-            </ul>
-        {% endfor %}
-        </table>
-    <button><a href="new_post/">글쓰기</a></button>
+<h1>게시판 페이지입니다</h1>
 
-    <table >
+<table>
+    {% for post in postlist %}
+    <tr>
+        <td><a href="{% url 'posting' post.pk %}">{{ post.postname }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
 
-    {% for me in menu %}
-        <ul class="left">
-            <li> {{me}} </li>
-        </ul>
-        {% endfor %}
-    </table>
-    </body>
+<button><a href="{% url 'new_post' %}">글쓰기</a></button>
+
+<table class="ta">
+    {% for item in menu %}
+    <tr>
+        <td>{{ item }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
 </html>

@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-)(n%a^vsq%0-*5wust4=e%y42itee)*=_p(plisl3l^a!jag4a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# 실제 배포 환경에서는 여기에 호스트를 추가하세요.
 ALLOWED_HOSTS = []
 
 
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
+    'app',  # 앱 등록
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  # 필요 시 템플릿 디렉토리 추가
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,13 +117,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # 정적 파일 디렉토리 경로 추가
+]
+# Media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'

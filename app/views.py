@@ -17,7 +17,7 @@ def posting(request, pk):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색
     post = Post.objects.get(pk=pk)
     # posting.html 페이지를 열 때, 찾아낸 게시글(post)을 post라는 이름으로 가져옴
-    return render(request, 'main/posting.html', {'post':post , 'menu' :menu(20240515)})
+    return render(request, 'main/posting.html', {'post':post , 'menu' :menu.result('20240515')})
 
 def new_post(request):
     if request.method == 'POST':
@@ -35,6 +35,10 @@ def new_post(request):
             )
         return redirect('/blog/')
     return render(request, 'main/new_post.html')
+
+
+def game(request):
+    return render(request,"main/game.html")
 
 
 

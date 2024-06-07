@@ -1,17 +1,5 @@
 import turtle
-import socket
-import _thread
-import numpy as np
 
-t = turtle.Turtle()
-
-turtle.title("31001 강민석,31017 이송주, 파이썬을 이용한 오목")
-t.hideturtle()
-
-t.speed(0)
-turtle.bgcolor("#DEB887")
-
-a = np.zeros((16, 16))
 
 class omok:
     def __init__(self):
@@ -53,16 +41,22 @@ class omok:
         t.pu()
         t.goto(-420+50*x ,400-50*y)
         t.pd()
-
         t.begin_fill()
         t.color("white" if n == 1 else "black")
         t.circle(20)
         t.end_fill()
 
 w = omok()
-
 w.init()
 
-w.locate(3,3,-1)
+def place_stone(x, y):
+    # Convert mouse click position to grid coordinates
+    grid_x = int((x + 420) // 50)
+    grid_y = int((420 - y) // 50)
+    # Place stone at the corresponding grid position
+    w.locate(grid_x, grid_y, 1)
+
+# Listen for mouse clicks and call place_stone function
+turtle.onscreenclick(place_stone)
 
 turtle.mainloop()
