@@ -8,7 +8,7 @@ client_dict = {}
 def handle_client(client_socket, address):
     # 클라이언트의 닉네임을 받아옵니다.
     nickname = client_socket.recv(1024).decode()
-    client_dict[nickname] = client_socket  # 딕셔너리에 클라이언트의 닉네임과 소켓 저장
+    client_dict[nickname] = client_socket
     print(f"클라이언트 {nickname}({address})가 연결되었습니다.")
 
     # 클라이언트에게 색상을 전송합니다.

@@ -1,4 +1,4 @@
-import socket , turtle , json , threading
+import socket, turtle, json, threading
 
 
 class OmokClient:
@@ -16,10 +16,13 @@ class OmokClient:
         self.my_color = self.client_socket.recv(1024).decode()
         print("나의 색상:", self.my_color)
 
+        # 현재 차례 여부를 저장할 변수
+        self.my_turn = True if self.my_color == "black" else False
+
         self.t = turtle.Turtle()
         self.turtle_setup()
-    def turtle_setup(self):
 
+    def turtle_setup(self):
         self.t.speed(0)
         turtle.title("31001 강민석,31017 이송주, 파이썬을 이용한 오목")
         self.t.hideturtle()
@@ -29,12 +32,13 @@ class OmokClient:
 
     def locate(self, x, y, color):
         self.t.pu()
-        self.t.goto(-420 + 50 * x , 400 - 50 * y)
+        self.t.goto(-420 + 50 * x, 400 - 50 * y)
         self.t.pd()
         self.t.begin_fill()
         self.t.color("white" if color == "white" else "black")
         self.t.circle(20)
         self.t.end_fill()
+
     def move(self, x, y, m):
         if a[x, y] == 0:
             for i, n in zip(self.dx, self.dy):
@@ -48,7 +52,7 @@ class OmokClient:
                 if count == 5:
                     print("승")
                     return
-                a[x, y]  =m
+                a[x, y] = m
 
     def q(self, a, b):
         self.t.pu()
@@ -61,13 +65,20 @@ class OmokClient:
             self.t.fd(800)
             self.t.bk(800)
             self.t.lt(b)
+
     def place_stone(self, x, y):
+        if not self.my_turn:
+            return  # 자신의 차례가 아니면 돌을 놓을 수 없음
+
         # Convert mouse click position to grid coordinates
         grid_x = int((x + 420) // 50)
         grid_y = int((420 - y) // 50)
         # Send stone position to server as JSON
         data = {"x": grid_x, "y": grid_y}
         self.client_socket.sendall(json.dumps(data).encode())
+
+        # 현재 차례를 변경
+        self.my_turn = False
 
     def receive_board_state(self):
         while True:
@@ -79,13 +90,16 @@ class OmokClient:
                 for cell in row:
                     self.locate(cell["x"], cell["y"], cell["color"])
 
+            # 상대방이 돌을 놓은 후에 다시 자신의 차례가 됨
+            self.my_turn = True
+
     def start(self):
         threading.Thread(target=self.receive_board_state).start()
         # Start listening for mouse clicks to place stones
         turtle.onscreenclick(self.place_stone)
         # Keep the turtle window open
-
         turtle.mainloop()
+
 
 client = OmokClient()
 client.start()
