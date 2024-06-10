@@ -1,6 +1,8 @@
 import turtle
 
 
+
+
 class omok:
     def __init__(self):
         self.dx = [-1, 1, -1, 1, 0, 0, 1, -1]
