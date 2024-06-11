@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles/style.css' %}" />
+</head>
+
+<body>
+<nav class="menu_box_1">
+    <ul>
+        <li><a href="{% url 'blog' %}">블로그</a></li>
+        <li><a href="{% url 'game' %}">게임</a></li>
+        <li><a href="#">메뉴 아이템3</a></li>
+        <li><a href="{% url 'common:login' %}">로그인</a></li>
+    </ul>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>

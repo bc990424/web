@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'common.apps.CommonConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # 필요 시 템플릿 디렉토리 추가
+        'DIRS': [os.path.join(BASE_DIR,'templates')],  # 필요 시 템플릿 디렉토리 추가
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

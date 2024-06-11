@@ -1,3 +1,4 @@
+{% extends "menu.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,17 +7,10 @@
 <head>
     <meta charset="UTF-8">
     <title>게임</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'main/styles/style.css' %}" />
 </head>
 <body>
-<nav class="menu_box_1">
-        <ul>
-            <li><a href="/blog/">블로그</a></li>
-            <li><a href="/game">게임</a></li>
-            <li><a href="#">메뉴 아이템3</a></li>
-            <li><a href="#">메뉴 아이템4</a></li>
-        </ul>
-    </nav>
+    {% block content %}
     <iframe id="ga" src="https://slither.io"></iframe>
+    {% endblock %}
 </body>
 </html>

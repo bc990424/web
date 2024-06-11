@@ -1,11 +1,12 @@
+{% extends "menu.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>블로그 목록</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'main/styles/style.css' %}" />
     <style>
         .ta {
             float: right; /* .ta 클래스를 오른쪽에 배치 */
@@ -13,16 +14,9 @@
         }
     </style>
 </head>
-<body class="menu">
 
-<nav class="menu_box_1">
-    <ul>
-        <li><a href="{% url 'blog' %}">블로그</a></li>
-        <li><a href="{% url 'game' %}">게임</a></li>
-        <li><a href="#">메뉴 아이템3</a></li>
-        <li><a href="#">메뉴 아이템4</a></li>
-    </ul>
-</nav>
+<body>
+{% block content %}
 
 <h1>게시판 페이지입니다</h1>
 
@@ -43,6 +37,6 @@
     </tr>
     {% endfor %}
 </table>
-
+{% endblock %}
 </body>
 </html>
