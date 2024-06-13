@@ -1,5 +1,7 @@
-import socket, turtle, json, threading
-
+import socket
+import turtle
+import json
+import threading
 
 class OmokClient:
     def __init__(self):
@@ -19,6 +21,7 @@ class OmokClient:
         # 현재 차례 여부를 저장할 변수
         self.my_turn = True if self.my_color == "black" else False
 
+        self.board = [[0 for _ in range(16)] for _ in range(16)]  # 로컬 보드 상태
         self.t = turtle.Turtle()
         self.turtle_setup()
 
@@ -39,21 +42,6 @@ class OmokClient:
         self.t.circle(20)
         self.t.end_fill()
 
-    def move(self, x, y, m):
-        if a[x, y] == 0:
-            for i, n in zip(self.dx, self.dy):
-                count = 0
-                for z in range(1, 6):
-                    if 0 <= x + i * z < 16 and 0 <= y + n * z < 16:
-                        if a[x + i * z, y + n * z] == m:
-                            count += 1
-                        else:
-                            break
-                if count == 5:
-                    print("승")
-                    return
-                a[x, y] = m
-
     def q(self, a, b):
         self.t.pu()
         self.t.goto(-400, 400)
@@ -73,33 +61,50 @@ class OmokClient:
         # Convert mouse click position to grid coordinates
         grid_x = int((x + 420) // 50)
         grid_y = int((420 - y) // 50)
+
+        # 보드의 유효한 위치인지 확인
+        if grid_x < 0 or grid_x >= 16 or grid_y < 0 or grid_y >= 16:
+            return
+
         # Send stone position to server as JSON
         data = {"x": grid_x, "y": grid_y}
         self.client_socket.sendall(json.dumps(data).encode())
 
+        # 로컬 보드 상태 업데이트 및 화면에 돌 표시
+        self.board[grid_x][grid_y] = 1 if self.my_color == "black" else 2
+        self.locate(grid_x, grid_y, self.my_color)
+
         # 현재 차례를 변경
         self.my_turn = False
 
-    def receive_board_state(self):
+    def receive_server_messages(self):
         while True:
-            # Receive board state from server as JSON
+            # 서버로부터 메시지를 수신
             data = self.client_socket.recv(1024).decode()
-            board_state = json.loads(data)
-            # Update board state on turtle screen
-            for row in board_state:
-                for cell in row:
-                    self.locate(cell["x"], cell["y"], cell["color"])
+            message = json.loads(data)
+
+            if "type" in message and message["type"] == "victory":
+                # 승리 메시지 처리
+                winner = message["winner"]
+                print(f"{winner}님이 승리했습니다!")
+                turtle.bye()  # 터틀 그래픽 창 닫기
+                break
+            else:
+                # 돌의 위치 업데이트 처리
+                x, y = message['x'], message['y']
+                color = "black" if (self.my_color == "white") else "white"
+                self.board[x][y] = 1 if color == "black" else 2
+                self.locate(x, y, color)
 
             # 상대방이 돌을 놓은 후에 다시 자신의 차례가 됨
             self.my_turn = True
 
     def start(self):
-        threading.Thread(target=self.receive_board_state).start()
+        threading.Thread(target=self.receive_server_messages).start()
         # Start listening for mouse clicks to place stones
         turtle.onscreenclick(self.place_stone)
         # Keep the turtle window open
         turtle.mainloop()
-
 
 client = OmokClient()
 client.start()

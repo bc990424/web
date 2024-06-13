@@ -5,6 +5,30 @@ import json
 # 클라이언트의 닉네임과 소켓을 저장할 딕셔너리
 client_dict = {}
 
+# 16x16 보드 생성
+board = [[0 for _ in range(16)] for _ in range(16)]
+dx = [1, 0, 1, 1]  # 방향 벡터: 가로, 세로, 대각선 2개
+dy = [0, 1, 1, -1]
+
+def check_victory(x, y, m):
+    for i in range(4):
+        count = 1  # 현재 돌을 포함하므로 1부터 시작
+        for z in range(1, 6):
+            nx, ny = x + dx[i] * z, y + dy[i] * z
+            if 0 <= nx < 16 and 0 <= ny < 16 and board[nx][ny] == m:
+                count += 1
+            else:
+                break
+        for z in range(1, 6):
+            nx, ny = x - dx[i] * z, y - dy[i] * z
+            if 0 <= nx < 16 and 0 <= ny < 16 and board[nx][ny] == m:
+                count += 1
+            else:
+                break
+        if count >= 5:
+            return True
+    return False
+
 def handle_client(client_socket, address):
     # 클라이언트의 닉네임을 받아옵니다.
     nickname = client_socket.recv(1024).decode()
@@ -22,12 +46,22 @@ def handle_client(client_socket, address):
             if not data:
                 break  # 데이터가 없으면 연결 종료
             stone_pos = json.loads(data)
-            print(f"{nickname}이(가) 돌을 놓은 위치: {stone_pos}")
+            x, y = stone_pos['x'], stone_pos['y']
+            board[x][y] = 1 if color == "black" else 2
 
-            # 다른 클라이언트들에게 돌의 위치를 전송합니다.
+            # 돌의 위치를 다른 클라이언트에게 전송
             for client_name, client_sock in client_dict.items():
                 if client_sock != client_socket:  # 자신을 제외하고
                     client_sock.sendall(data.encode())  # 다른 클라이언트에게 돌의 위치를 전송합니다.
+
+            # 승리 조건 체크
+            if check_victory(x, y, board[x][y]):
+                print(f"{nickname}이(가) 승리했습니다!")
+                victory_message = json.dumps({"type": "victory", "winner": nickname})
+                for client_sock in client_dict.values():
+                    client_sock.sendall(victory_message.encode())
+                break
+
     except Exception as e:
         print(f"클라이언트 {nickname}({address})와의 연결이 끊어졌습니다.")
     finally:
