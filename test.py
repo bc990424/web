@@ -13,7 +13,7 @@ class OmokClient:
 
 
         self.nickname = input("닉네임을 입력하세요: ")
-.
+
         self.client_socket.sendall(self.nickname.encode())
         self.my_color = self.client_socket.recv(1024).decode()
         print("나의 색상:", self.my_color)
