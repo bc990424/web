@@ -84,10 +84,10 @@ class OmokClient:
                 winner = message["winner"]
                 self.t.clear()
                 self.t.goto(0,0)
-                self.t.write(f"{winner}님이 승리했습니다!",aligon = "center",font=("Arial", 80, "normal"))
+                self.t.write(f"{winner}님이 승리했습니다!",align = "center",font=("Arial", 80, "normal"))
                 print(f"{winner}님이 승리했습니다!")
                 turtle.exitonclick()
-                break
+
             else:
                 # 돌의 위치 업데이트 처리
                 x, y = message['x'], message['y']
