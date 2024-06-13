@@ -82,9 +82,10 @@ class OmokClient:
             if "type" in message and message["type"] == "victory":
 
                 winner = message["winner"]
-                self.t.clear()
+
                 self.t.goto(0,0)
-                self.t.write(f"{winner}님이 승리했습니다!",align = "center",font=("Arial", 80, "normal"))
+                self.t.clear()
+                self.t.write(f"{winner}님이 승리했습니다!",align = "center",font=("Arial", 50, "normal"))
                 print(f"{winner}님이 승리했습니다!")
                 turtle.exitonclick()
 
