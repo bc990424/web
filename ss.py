@@ -47,6 +47,7 @@ def handle_client(client_socket, address):
                 break  # 데이터가 없으면 연결 종료
             stone_pos = json.loads(data)
             x, y = stone_pos['x'], stone_pos['y']
+
             board[x][y] = 1 if color == "black" else 2
 
             # 돌의 위치를 다른 클라이언트에게 전송

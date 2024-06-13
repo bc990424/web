@@ -65,17 +65,16 @@ class OmokClient:
         # 보드의 유효한 위치인지 확인
         if grid_x < 0 or grid_x >= 16 or grid_y < 0 or grid_y >= 16:
             return
+        if self.board[grid_x][grid_y] == 0:
+            data = {"x": grid_x, "y": grid_y}
+            self.client_socket.sendall(json.dumps(data).encode())
 
-        # Send stone position to server as JSON
-        data = {"x": grid_x, "y": grid_y}
-        self.client_socket.sendall(json.dumps(data).encode())
+            # 로컬 보드 상태 업데이트 및 화면에 돌 표시
+            self.board[grid_x][grid_y] = 1 if self.my_color == "black" else 2
+            self.locate(grid_x, grid_y, self.my_color)
 
-        # 로컬 보드 상태 업데이트 및 화면에 돌 표시
-        self.board[grid_x][grid_y] = 1 if self.my_color == "black" else 2
-        self.locate(grid_x, grid_y, self.my_color)
-
-        # 현재 차례를 변경
-        self.my_turn = False
+            # 현재 차례를 변경
+            self.my_turn = False
 
     def receive_server_messages(self):
         while True:
@@ -86,8 +85,11 @@ class OmokClient:
             if "type" in message and message["type"] == "victory":
                 # 승리 메시지 처리
                 winner = message["winner"]
+                self.t.clear()
+                self.t.goto(0,0)
+                self.t.write(f"{winner}님이 승리했습니다!",aligon = "center",font=("Arial", 80, "normal"))
                 print(f"{winner}님이 승리했습니다!")
-                turtle.bye()  # 터틀 그래픽 창 닫기
+                turtle.onclick(turtle.bye)# 터틀 그래픽 창 닫기
                 break
             else:
                 # 돌의 위치 업데이트 처리
