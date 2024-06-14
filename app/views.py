@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Post,CODE
 from . import menu
-
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -12,7 +12,8 @@ def blog(request):
 
 
     # blog.html 페이지를 열 때, 모든 Post인 postlist도 같이 가져옵니다
-    return render(request, 'main/blog.html', {'postlist':postlist ,'menu': menu.result('20240501')})
+    today = datetime.today()
+    return render(request, 'main/blog.html', {'postlist':postlist ,'menu': menu.result(today.strftime("%Y%m%d"))})
 
 def posting(request, pk):
     # 게시글(Post) 중 pk(primary_key)를 이용해 하나의 게시글(post)를 검색

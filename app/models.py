@@ -16,6 +16,5 @@ class Post(models.Model):
 class CODE(models.Model):
     code = models.TextField()
     def __str__(self):
-
         return self.code
 

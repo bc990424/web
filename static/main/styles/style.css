@@ -15,8 +15,8 @@ a {
 body.menu {
     text-align: center;
     padding-top: 40px;
-    background-color: #f9f9f9; /* 배경색 추가 */
-    font-family: Arial, sans-serif; /* 글꼴 설정 */
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
 }
 
 .menu_box_1 {
@@ -24,7 +24,8 @@ body.menu {
     display: inline-block;
     padding: 0 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
 }
 
 .menu_box_1 ul {
@@ -34,13 +35,13 @@ body.menu {
 
 .menu_box_1 ul li {
     display: inline-block;
-    margin: 0 10px; /* 아이템 사이 간격 추가 */
+    margin: 0 10px;
 }
 
 .menu_box_1 ul li a {
     display: block;
-    padding: 15px 20px; /* 패딩 조정 */
-    transition: background-color 0.3s, color 0.3s; /* 호버 애니메이션 추가 */
+    padding: 15px 20px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .menu_box_1 ul li:hover a {
@@ -51,7 +52,10 @@ body.menu {
 
 /* 테이블 스타일 시작 */
 .ta {
-    float: right;
+    float: none;
+    margin: 20px auto; /* 수평 가운데 정렬 */
     border: 1px solid blue;
+    display: block;
+    width: 80%; /* 테이블 너비 설정 */
 }
 /* 테이블 스타일 끝 */
