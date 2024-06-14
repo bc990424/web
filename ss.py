@@ -61,7 +61,9 @@ def handle_client(client_socket, address):
                 victory_message = json.dumps({"type": "victory", "winner": nickname})
                 for client_sock in client_dict.values():
                     client_sock.sendall(victory_message.encode())
-                break
+                board = [[0 for _ in range(16)] for _ in range(16)]
+
+
 
     except Exception as e:
         print(f"클라이언트 {nickname}({address})와의 연결이 끊어졌습니다.")

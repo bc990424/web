@@ -87,7 +87,9 @@ class OmokClient:
                 self.t.clear()
                 self.t.write(f"{winner}님이 승리했습니다!",align = "center",font=("Arial", 50, "normal"))
                 print(f"{winner}님이 승리했습니다!")
-                turtle.exitonclick()
+
+                client.start()
+               # turtle.exitonclick()
 
             else:
                 # 돌의 위치 업데이트 처리
