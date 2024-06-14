@@ -12,7 +12,7 @@ class OmokClient:
         self.client_socket.connect(self.server_address)
 
 
-        self.nickname = input("닉네임을 입력하세요: ")
+        self.nickname = turtle.textinput("닉네임을 입력하세요: ")
 
         self.client_socket.sendall(self.nickname.encode())
         self.my_color = self.client_socket.recv(1024).decode()
@@ -87,9 +87,7 @@ class OmokClient:
                 self.t.clear()
                 self.t.write(f"{winner}님이 승리했습니다!",align = "center",font=("Arial", 50, "normal"))
                 print(f"{winner}님이 승리했습니다!")
-
-                client.start()
-               # turtle.exitonclick()
+                turtle.exitonclick()
 
             else:
                 # 돌의 위치 업데이트 처리
