@@ -39,6 +39,7 @@ def handle_client(client_socket, address):
     color = "white" if len(client_dict) % 2 == 0 else "black"  # 짝수 번째 클라이언트는 흰색, 홀수 번째 클라이언트는 검정색
     client_socket.sendall(color.encode())
 
+
     try:
         while True:
             # 클라이언트로부터 돌의 위치를 받습니다.
@@ -61,9 +62,7 @@ def handle_client(client_socket, address):
                 victory_message = json.dumps({"type": "victory", "winner": nickname})
                 for client_sock in client_dict.values():
                     client_sock.sendall(victory_message.encode())
-                board = [[0 for _ in range(16)] for _ in range(16)]
-
-
+                break
 
     except Exception as e:
         print(f"클라이언트 {nickname}({address})와의 연결이 끊어졌습니다.")

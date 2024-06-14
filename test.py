@@ -12,7 +12,7 @@ class OmokClient:
         self.client_socket.connect(self.server_address)
 
 
-        self.nickname = turtle.textinput("닉네임을 입력하세요: ")
+        self.nickname = input("닉네임을 입력하세요: ")
 
         self.client_socket.sendall(self.nickname.encode())
         self.my_color = self.client_socket.recv(1024).decode()

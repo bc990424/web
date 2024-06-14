@@ -10,8 +10,12 @@
     <ul>
         <li><a href="{% url 'blog' %}">블로그</a></li>
         <li><a href="{% url 'game' %}">게임</a></li>
-        <li><a href="#">메뉴 아이템3</a></li>
+        <li><a href="{% url 'common:signup' %}">회원가입</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'common:logout' %}">로그아웃</a></li>
+        {% else %}
         <li><a href="{% url 'common:login' %}">로그인</a></li>
+        {% endif %}
     </ul>
 </nav>
 {% block content %}
